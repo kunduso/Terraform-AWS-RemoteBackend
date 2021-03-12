@@ -5,9 +5,9 @@ trigger:
     vmImage: 'vs2017-win2016'
   
   variables:
-    - group: ADO-TF-AWS-VPC-Int
+    - group: TF-RS-AWS
     - name: region
-      value: 'us-east-1'
+      value: 'us-east-2'
   
   
   # Install Terraform extension to use this task https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks&ssr=false#overview
@@ -15,11 +15,10 @@ trigger:
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
     displayName: 'Install Terraform 0.14.8'
     inputs:
-      terraformVersion: 0.14.0
+      terraformVersion: 0.14.8
   # Terraform versions: https://releases.hashicorp.com/terraform/
   
   - powershell: |
-     Write-Host "This is the current working directory: $(build.sourcesdirectory)"
      terraform init -backend-config="bucket=terraform-remote-bucket-skundu" -backend-config="key=tf/TF-RS-AWS/terraform.tfstate" -backend-config="region=$(region)" -backend-config="access_key=$(access_key)" -backend-config="secret_key=$(secret_key)" -no-color
     workingDirectory: $(build.sourcesdirectory)
     displayName: 'terraform init'
