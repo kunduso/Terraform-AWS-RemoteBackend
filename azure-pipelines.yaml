@@ -1,17 +1,17 @@
 trigger:
   - main
   
-  pool:
+pool:
     vmImage: 'vs2017-win2016'
   
-  variables:
+variables:
     - group: TF-RS-AWS
     - name: region
       value: 'us-east-2'
   
   
   # Install Terraform extension to use this task https://marketplace.visualstudio.com/items?itemName=ms-devlabs.custom-terraform-tasks&ssr=false#overview
-  steps:
+steps:
   - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
     displayName: 'Install Terraform 0.14.8'
     inputs:
